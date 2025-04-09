@@ -24,8 +24,10 @@ api_gateway = boto3.client('apigatewaymanagementapi',
 CLOUDFRONT_DOMAIN = os.getenv("CDN_DOMAIN")
 KEY_PAIR_ID = os.getenv("KEY_PAIR_ID")
 
-def get_rsa_key_from_secret(secret_name="my-rsa-private-key", region="ap-southeast-1"):
+def get_rsa_key_from_secret():
     """Fetches RSA private key from Secrets Manager (plaintext format)."""
+    secret_name = os.getenv("SECRET_NAME")
+    region = os.getenv("REGION")
     secrets_client = boto3.client("secretsmanager", region_name=region)
     response = secrets_client.get_secret_value(SecretId=secret_name)
     
